@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final localeNotifier = ValueNotifier<Locale>(const Locale('en'));
+
+Future<void> loadSavedLocale() async {
+  final prefs = await SharedPreferences.getInstance();
+  final code = prefs.getString('locale') ?? 'en';
+  localeNotifier.value = Locale(code);
+}
+
+Future<void> setLocale(String code) async {
+  localeNotifier.value = Locale(code);
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('locale', code);
+}
 
 class L10n {
   final Locale locale;
@@ -13,7 +26,6 @@ class L10n {
     return _strings[lang]?[key] ?? _strings['en']?[key] ?? key;
   }
 
-  // Convenience getters
   String get navProjects => _t('navProjects');
   String get navServices => _t('navServices');
   String get navAbout => _t('navAbout');
@@ -73,7 +85,7 @@ class L10n {
       'heroLine1': 'Building',
       'heroLine2': 'digital products',
       'heroLine3': ' with Flutter.',
-      'heroTagline': "I'm Your Fraol Dirirsa — a Flutter developer helping startups ship fast, beautiful mobile and web apps.",
+      'heroTagline': "I'm Fraol Dirirsa — a Flutter developer helping startups ship fast, beautiful mobile and web apps.",
       'viewWork': 'View my work',
       'downloadCv': 'Download CV',
 
@@ -92,7 +104,7 @@ class L10n {
       'aboutBody2': "I've worked with startups, agencies, and direct clients across fintech, health, e-commerce, and SaaS.",
       'currently': 'CURRENTLY',
       'statAvailable': 'Available for freelance',
-      'statBased': 'Based in Your City',
+      'statBased': 'Based in Addis Ababa',
       'statOpen': 'Open to long-term contracts',
 
       'testimonialsTag': 'Testimonials',
@@ -121,7 +133,7 @@ class L10n {
       'heroLine1': 'እየገነባሁ ነው',
       'heroLine2': 'ዲጂታል ምርቶችን',
       'heroLine3': ' በ Flutter።',
-      'heroTagline': 'እኔ [ስምዎ] ነኝ — ለስታርትአፖች ፈጣን እና ውብ የሞባይል እና የድረ-ገጽ መተግበሪያዎችን የማዘጋጅ Flutter ገንቢ ነኝ።',
+      'heroTagline': 'እኔ ፍራኦል ድሪርሳ ነኝ — ለስታርትአፖች ፈጣን እና ውብ የሞባይል እና የድረ-ገጽ መተግበሪያዎችን የማዘጋጅ Flutter ገንቢ ነኝ።',
       'viewWork': 'ሥራዬን ይመልከቱ',
       'downloadCv': 'CV ያውርዱ',
 
@@ -140,7 +152,7 @@ class L10n {
       'aboutBody2': 'ከስታርትአፖች፣ ከኤጀንሲዎች፣ እና ከቀጥታ ደንበኞች ጋር በፊንቴክ፣ በጤና፣ በኢ-ኮሜርስ፣ እና በ SaaS ሠርቻለሁ።',
       'currently': 'በአሁኑ ጊዜ',
       'statAvailable': 'ለፍሪላንስ ዝግጁ ነኝ',
-      'statBased': 'በ [ከተማዎ] የምገኝ',
+      'statBased': 'በአዲስ አበባ የምገኝ',
       'statOpen': 'ለረዥም ጊዜ ውል ክፍት ነኝ',
 
       'testimonialsTag': 'ምስክሮች',
@@ -156,7 +168,7 @@ class L10n {
       'sentOk': 'መልእክት ተልኳል ✓',
       'sentFail': 'አልተሳካም። እንደገና ይሞክሩ።',
 
-      'footer': '© 2026 ፍራኦል ዲሪርሳ ። በ Flutter የተገነባ።',
+      'footer': '© 2026 ፍራኦል ድሪርሳ። በ Flutter የተገነባ።',
     },
   };
 }

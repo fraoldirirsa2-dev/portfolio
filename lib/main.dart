@@ -17,10 +17,12 @@ import 'sections/about.dart';
 import 'sections/testimonials.dart';
 import 'sections/contact.dart';
 import 'sections/footer.dart';
+import 'admin/admin_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await loadSavedLocale();
   runApp(const PortfolioApp());
 }
 
@@ -33,7 +35,7 @@ class PortfolioApp extends StatelessWidget {
       valueListenable: localeNotifier,
       builder: (context, locale, _) {
         return MaterialApp(
-          title: 'Your Name — Flutter Developer',
+          title: 'Fraol Dirirsa — Flutter Developer',
           debugShowCheckedModeBanner: false,
           theme: buildTheme(),
           locale: locale,
@@ -46,7 +48,11 @@ class PortfolioApp extends StatelessWidget {
           localeResolutionCallback: (deviceLocale, supported) {
             return locale;
           },
-          home: const HomePage(),
+          initialRoute: '/',
+          routes: {
+            '/': (_) => const HomePage(),
+            '/admin': (_) => const AdminPage(),
+          },
         );
       },
     );
